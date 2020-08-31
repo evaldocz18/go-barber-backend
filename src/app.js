@@ -6,6 +6,9 @@ import cors from 'cors';
 import Youch from 'youch';
 import * as Sentry from '@sentry/node';
 import 'express-async-errors';
+
+import morgan from 'morgan';
+
 import routes from './routes';
 import sentryConfig from './config/sentry';
 
@@ -14,9 +17,8 @@ import './database';
 class App {
   constructor() {
     this.server = express();
-
+    this.server.use(morgan('dev'));
     Sentry.init(sentryConfig);
-
     this.middlewares();
     this.routes();
     this.exceptionHandler();
